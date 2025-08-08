@@ -1,5 +1,18 @@
 const TodoItem = () => {
-  return <div>TodoItem</div>;
+  return (
+    <div className="flex items-center gap-4 py-2 px-3">
+      <input type="checkbox" aria-label="완료 체크" />
+      <div className="flex-1 text-sm">Todo...</div>
+      <div className="text-sm text-gray-500 whitespace-nowrap">Date</div>
+      <button
+        className="text-sm text-gray-500 rounded px-2 py-1 
+      cursor-pointer hover:text-gray-700 hover:bg-gray-100 transition-all duration-200"
+        aria-label="삭제"
+      >
+        삭제
+      </button>
+    </div>
+  );
 };
 
 export default TodoItem;
