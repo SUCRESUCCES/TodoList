@@ -1,6 +1,11 @@
 import TodoItem from "./TodoItem";
+import { Todo } from "@/types/todo";
 
-const List = () => {
+interface ListProps {
+  todos: Todo[];
+}
+
+const List = ({ todos }: ListProps) => {
   return (
     <div className="flex flex-col gap-5 px-2 sm:px-4 md:px-6">
       <h4 className="text-lg sm:text-l font-semibold mb-2 tracking-wide">
@@ -15,9 +20,9 @@ const List = () => {
         placeholder="검색어를 입력하세요"
       />
       <div className="flex flex-col gap-5">
-        <TodoItem />
-        <TodoItem />
-        <TodoItem />
+        {todos.map((todo) => (
+          <TodoItem key={todo.id} {...todo} />
+        ))}
       </div>
     </div>
   );
