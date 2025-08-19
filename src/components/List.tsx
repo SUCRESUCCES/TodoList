@@ -4,9 +4,11 @@ import { useState } from "react";
 
 interface ListProps {
   todos: Todo[];
+  onUpdate: (targetId: number) => void;
+  onEdit?: (targetId: number, newContent: string) => void;
 }
 
-const List = ({ todos }: ListProps) => {
+const List = ({ todos, onUpdate, onEdit }: ListProps) => {
   const [search, setSearch] = useState("");
 
   const onChangeSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -41,7 +43,12 @@ const List = ({ todos }: ListProps) => {
       />
       <div className="flex flex-col gap-5">
         {filteredTodos.map((todo) => (
-          <TodoItem key={todo.id} {...todo} />
+          <TodoItem
+            key={todo.id}
+            {...todo}
+            onUpdate={onUpdate}
+            onEdit={onEdit}
+          />
         ))}
       </div>
     </div>
