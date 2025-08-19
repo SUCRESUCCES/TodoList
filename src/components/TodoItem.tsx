@@ -3,7 +3,12 @@ import { Todo } from "@/types/todo";
 const TodoItem = (props: Todo) => {
   return (
     <div className="flex items-center gap-4 py-2 px-3">
-      <input type="checkbox" aria-label="완료 체크" checked={props.isDone} />
+      <input
+        readOnly
+        checked={props.isDone}
+        type="checkbox"
+        aria-label="완료 체크"
+      />
       <div className="flex-1 text-sm">{props.content}</div>
       <div className="text-sm text-gray-500 whitespace-nowrap">
         {new Date(props.createdAt).toLocaleDateString()}
