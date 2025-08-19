@@ -9,7 +9,9 @@ import { Todo } from "@/types/todo";
 
 export default function Home() {
   const [todos, setTodos] = useState<Todo[]>(mockTodos);
-  const idRef = useRef<number>(3);
+  const idRef = useRef<number>(
+    Math.max(0, ...mockTodos.map((todo) => todo.id)) + 1
+  );
 
   const onCreate = (content: string) => {
     const newTodo: Todo = {

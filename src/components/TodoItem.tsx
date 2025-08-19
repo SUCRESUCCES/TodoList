@@ -1,10 +1,10 @@
 import { Todo } from "@/types/todo";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 interface TodoItemProps extends Todo {
   onUpdate: (id: number) => void;
   onEdit?: (id: number, newContent: string) => void;
-  onDelete?: (id: number) => void;
+  onDelete: (id: number) => void;
 }
 
 const TodoItem = ({
@@ -19,6 +19,10 @@ const TodoItem = ({
   const [isEditing, setIsEditing] = useState(false);
   const [editContent, setEditContent] = useState(content);
 
+  useEffect(() => {
+    setEditContent(content);
+  }, [content]);
+
   const onChangeCheckbox = () => {
     onUpdate(id);
   };
@@ -31,7 +35,7 @@ const TodoItem = ({
   };
 
   const onDeleteClickButton = () => {
-    onDelete?.(id);
+    onDelete(id);
   };
 
   return (

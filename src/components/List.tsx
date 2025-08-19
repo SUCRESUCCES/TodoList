@@ -6,7 +6,7 @@ interface ListProps {
   todos: Todo[];
   onUpdate: (targetId: number) => void;
   onEdit?: (targetId: number, newContent: string) => void;
-  onDelete?: (targetId: number) => void;
+  onDelete: (targetId: number) => void;
 }
 
 const List = ({ todos, onUpdate, onEdit, onDelete }: ListProps) => {
