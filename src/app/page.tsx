@@ -1,14 +1,15 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useRef, useReducer } from "react";
 import Header from "@/components/Header";
 import Editor from "@/components/Editor";
 import List from "@/components/List";
 import { mockTodos } from "@/data/mockData";
 import { Todo } from "@/types/todo";
+import { todoReducer } from "@/components/todoReducer";
 
 export default function Home() {
-  const [todos, setTodos] = useState<Todo[]>(mockTodos);
+  const [todos, dispatch] = useReducer(todoReducer, mockTodos);
   const idRef = useRef<number>(
     Math.max(0, ...mockTodos.map((todo) => todo.id)) + 1
   );
@@ -20,29 +21,19 @@ export default function Home() {
       content: content,
       createdAt: new Date().getTime(),
     };
-    setTodos((prevTodos) => [newTodo, ...prevTodos]);
+    dispatch({ type: "CREATE", data: newTodo });
   };
 
   const onUpdate = (targetId: number) => {
-    setTodos((prev) =>
-      prev.map((todo) =>
-        todo.id === targetId ? { ...todo, isDone: !todo.isDone } : todo
-      )
-    );
+    dispatch({ type: "UPDATE", targetId });
   };
 
   const onEdit = (targetId: number, newContent: string) => {
-    setTodos((prev) =>
-      prev.map((todo) =>
-        todo.id === targetId
-          ? { ...todo, content: newContent, createdAt: Date.now() }
-          : todo
-      )
-    );
+    dispatch({ type: "EDIT", targetId, newContent });
   };
 
   const onDelete = (targetId: number) => {
-    setTodos((prev) => prev.filter((todo) => todo.id !== targetId));
+    dispatch({ type: "DELETE", targetId });
   };
   return (
     <main className="animate-fade-in w-full max-w-lg mx-auto flex flex-col gap-4 p-4">
