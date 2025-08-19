@@ -6,9 +6,10 @@ interface ListProps {
   todos: Todo[];
   onUpdate: (targetId: number) => void;
   onEdit?: (targetId: number, newContent: string) => void;
+  onDelete?: (targetId: number) => void;
 }
 
-const List = ({ todos, onUpdate, onEdit }: ListProps) => {
+const List = ({ todos, onUpdate, onEdit, onDelete }: ListProps) => {
   const [search, setSearch] = useState("");
 
   const onChangeSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -48,6 +49,7 @@ const List = ({ todos, onUpdate, onEdit }: ListProps) => {
             {...todo}
             onUpdate={onUpdate}
             onEdit={onEdit}
+            onDelete={onDelete}
           />
         ))}
       </div>

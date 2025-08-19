@@ -38,11 +38,20 @@ export default function Home() {
       )
     );
   };
+
+  const onDelete = (targetId: number) => {
+    setTodos((prev) => prev.filter((todo) => todo.id !== targetId));
+  };
   return (
     <main className="animate-fade-in w-full max-w-lg mx-auto flex flex-col gap-4 p-4">
       <Header />
       <Editor onCreate={onCreate} />
-      <List todos={todos} onUpdate={onUpdate} onEdit={onEdit} />
+      <List
+        todos={todos}
+        onUpdate={onUpdate}
+        onEdit={onEdit}
+        onDelete={onDelete}
+      />
     </main>
   );
 }

@@ -4,6 +4,7 @@ import { useState } from "react";
 interface TodoItemProps extends Todo {
   onUpdate: (id: number) => void;
   onEdit?: (id: number, newContent: string) => void;
+  onDelete?: (id: number) => void;
 }
 
 const TodoItem = ({
@@ -13,6 +14,7 @@ const TodoItem = ({
   createdAt,
   onUpdate,
   onEdit,
+  onDelete,
 }: TodoItemProps) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editContent, setEditContent] = useState(content);
@@ -27,6 +29,11 @@ const TodoItem = ({
     }
     setIsEditing(false);
   };
+
+  const onDeleteClickButton = () => {
+    onDelete?.(id);
+  };
+
   return (
     <div className="flex items-center gap-4 py-2 px-3">
       <input
@@ -80,6 +87,7 @@ const TodoItem = ({
       )}
 
       <button
+        onClick={onDeleteClickButton}
         className="text-sm text-gray-500 rounded px-2 py-1 
       cursor-pointer hover:text-gray-700 hover:bg-gray-100 transition-all duration-200"
         aria-label="삭제"
