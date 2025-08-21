@@ -25,11 +25,11 @@ const Editor = ({ onCreate }: EditorProps) => {
   };
 
   const onsubmit = () => {
-    if (content === "") {
+    if (content.trim().length === 0) {
       contentRef.current?.focus();
       return;
     }
-    onCreate(content);
+    onCreate(content.trim());
     setContent("");
     contentRef.current?.focus();
   };
