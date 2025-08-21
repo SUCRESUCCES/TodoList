@@ -1,6 +1,6 @@
 import TodoItem from "./TodoItem";
 import { Todo } from "@/types/todo";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 
 interface ListProps {
   todos: Todo[];
@@ -16,7 +16,7 @@ const List = ({ todos, onUpdate, onEdit, onDelete }: ListProps) => {
     setSearch(e.target.value);
   };
 
-  const getFilteredData = () => {
+  const getFilteredTodos = () => {
     if (!search) {
       return todos;
     }
@@ -25,13 +25,49 @@ const List = ({ todos, onUpdate, onEdit, onDelete }: ListProps) => {
     );
   };
 
-  const filteredTodos = getFilteredData();
+  const filteredTodos = getFilteredTodos();
+
+  // useMemo로 집계 (todos 변경시에만 재계산)
+  const { totalCount, doneCount, notDoneCount } = useMemo(() => {
+    const totalCount = todos.length;
+    const doneCount = todos.filter((todo) => todo.isDone).length;
+    const notDoneCount = totalCount - doneCount;
+    return { totalCount, doneCount, notDoneCount };
+  }, [todos]);
 
   return (
     <div className="flex flex-col gap-5 px-2 sm:px-4 md:px-6">
-      <h4 className="text-lg sm:text-l font-semibold mb-2 tracking-wide">
+      <h4 className="text-lg sm:text-lg font-semibold mb-2 tracking-wide">
         Todo List🌱
       </h4>
+
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div className="bg-gray-50 rounded-xl shadow-sm p-4 flex flex-col items-center">
+          <span className="text-blue-600 text-sm font-medium mb-1">
+            전체 할 일
+          </span>
+          <span className="text-xl font-semibold text-gray-800">
+            {totalCount}
+          </span>
+        </div>
+        <div className="bg-gray-50 rounded-xl shadow-sm p-4 flex flex-col items-center">
+          <span className="text-blue-600 text-sm font-medium mb-1">
+            완료한 일
+          </span>
+          <span className="text-xl font-semibold text-gray-800">
+            {doneCount}
+          </span>
+        </div>
+        <div className="bg-gray-50 rounded-xl shadow-sm p-4 flex flex-col items-center">
+          <span className="text-blue-600 text-sm font-medium mb-1">
+            남은 일
+          </span>
+          <span className="text-xl font-semibold text-gray-800">
+            {notDoneCount}
+          </span>
+        </div>
+      </div>
+
       <input
         value={search}
         onChange={onChangeSearch}
