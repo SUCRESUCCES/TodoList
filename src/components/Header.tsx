@@ -1,3 +1,5 @@
+import { memo } from "react";
+
 const Header = () => {
   const today = new Date().toLocaleDateString("ko-KR", {
     weekday: "long",
@@ -22,4 +24,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default memo(Header);

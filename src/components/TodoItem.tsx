@@ -1,5 +1,5 @@
 import { Todo } from "@/types/todo";
-import { useState, useEffect } from "react";
+import { useState, useEffect, memo } from "react";
 
 interface TodoItemProps extends Todo {
   onUpdate: (id: number) => void;
@@ -52,7 +52,7 @@ const TodoItem = ({
           value={editContent}
           onChange={(e) => setEditContent(e.target.value)}
           onKeyDown={(e) => {
-            e.key === "Enter" && onSave();
+            if (e.key === "Enter") onSave();
           }}
           autoFocus
           className="flex-1 text-sm border-b border-gray-300 focus:outline-none focus:border-blue-500"
@@ -102,4 +102,11 @@ const TodoItem = ({
   );
 };
 
-export default TodoItem;
+export default memo(TodoItem, (prev: TodoItemProps, next: TodoItemProps) => {
+  if (prev.id !== next.id) return false;
+  if (prev.isDone !== next.isDone) return false;
+  if (prev.content !== next.content) return false;
+  if (prev.createdAt !== next.createdAt) return false;
+
+  return true;
+});
