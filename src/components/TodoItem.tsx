@@ -23,10 +23,6 @@ const TodoItem = ({ id, content, isDone, createdAt }: Todo) => {
     setIsEditing(false);
   };
 
-  const onDeleteClickButton = () => {
-    onDelete(id);
-  };
-
   return (
     <div className="flex items-center gap-4 py-2 px-3">
       <input
