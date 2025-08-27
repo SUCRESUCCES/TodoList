@@ -1,11 +1,10 @@
 import { useState, useRef, useEffect } from "react";
 import React from "react";
+import { useTodoContext } from "@/app/page";
 
-interface EditorProps {
-  onCreate: (content: string) => void;
-}
+const Editor = () => {
+  const { onCreate } = useTodoContext();
 
-const Editor = ({ onCreate }: EditorProps) => {
   const [content, setContent] = useState<string>("");
   const contentRef = useRef<HTMLInputElement>(null);
 

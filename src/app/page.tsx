@@ -1,12 +1,34 @@
 "use client";
 
-import { useRef, useReducer, useCallback } from "react";
+import {
+  useRef,
+  useReducer,
+  useCallback,
+  createContext,
+  useContext,
+} from "react";
 import Header from "@/components/Header";
 import Editor from "@/components/Editor";
 import List from "@/components/List";
 import { mockTodos } from "@/data/mockData";
 import { Todo } from "@/types/todo";
 import { todoReducer } from "@/components/todoReducer";
+
+type TodoContextValue = {
+  todos: Todo[];
+  onCreate: (content: string) => void;
+  onUpdate: (id: number) => void;
+  onEdit: (id: number, newContent: string) => void;
+  onDelete: (id: number) => void;
+};
+
+export const TodoContext = createContext<TodoContextValue | null>(null);
+
+export function useTodoContext() {
+  const ctx = useContext(TodoContext);
+  if (!ctx) throw new Error("TodoContext.Provider 안에서만 써야 함");
+  return ctx;
+}
 
 export default function Home() {
   const [todos, dispatch] = useReducer(todoReducer, mockTodos);
@@ -39,13 +61,18 @@ export default function Home() {
   return (
     <main className="animate-fade-in w-full max-w-lg mx-auto flex flex-col gap-4 p-4">
       <Header />
-      <Editor onCreate={onCreate} />
-      <List
-        todos={todos}
-        onUpdate={onUpdate}
-        onEdit={onEdit}
-        onDelete={onDelete}
-      />
+      <TodoContext.Provider
+        value={{
+          todos,
+          onCreate,
+          onUpdate,
+          onEdit,
+          onDelete,
+        }}
+      >
+        <Editor />
+        <List />
+      </TodoContext.Provider>
     </main>
   );
 }

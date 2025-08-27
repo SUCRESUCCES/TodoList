@@ -1,21 +1,10 @@
 import { Todo } from "@/types/todo";
 import { useState, useEffect, memo } from "react";
+import { useTodoContext } from "@/app/page";
 
-interface TodoItemProps extends Todo {
-  onUpdate: (id: number) => void;
-  onEdit?: (id: number, newContent: string) => void;
-  onDelete: (id: number) => void;
-}
+const TodoItem = ({ id, content, isDone, createdAt }: Todo) => {
+  const { onUpdate, onEdit, onDelete } = useTodoContext();
 
-const TodoItem = ({
-  id,
-  content,
-  isDone,
-  createdAt,
-  onUpdate,
-  onEdit,
-  onDelete,
-}: TodoItemProps) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editContent, setEditContent] = useState(content);
 
@@ -28,7 +17,7 @@ const TodoItem = ({
   };
 
   const onSave = () => {
-    if (editContent.trim() && onEdit) {
+    if (editContent.trim()) {
       onEdit(id, editContent);
     }
     setIsEditing(false);
@@ -91,9 +80,9 @@ const TodoItem = ({
       )}
 
       <button
-        onClick={onDeleteClickButton}
+        onClick={() => onDelete(id)}
         className="text-sm text-gray-500 rounded px-2 py-1 
-      cursor-pointer hover:text-gray-700 hover:bg-gray-100 transition-all duration-200"
+  cursor-pointer hover:text-gray-700 hover:bg-gray-100 transition-all duration-200"
         aria-label="삭제"
       >
         삭제

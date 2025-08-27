@@ -1,15 +1,9 @@
 import TodoItem from "./TodoItem";
-import { Todo } from "@/types/todo";
 import { useState, useMemo } from "react";
+import { useTodoContext } from "@/app/page";
 
-interface ListProps {
-  todos: Todo[];
-  onUpdate: (targetId: number) => void;
-  onEdit?: (targetId: number, newContent: string) => void;
-  onDelete: (targetId: number) => void;
-}
-
-const List = ({ todos, onUpdate, onEdit, onDelete }: ListProps) => {
+const List = () => {
+  const { todos } = useTodoContext();
   const [search, setSearch] = useState("");
 
   const onChangeSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -80,13 +74,7 @@ const List = ({ todos, onUpdate, onEdit, onDelete }: ListProps) => {
       />
       <div className="flex flex-col gap-5">
         {filteredTodos.map((todo) => (
-          <TodoItem
-            key={todo.id}
-            {...todo}
-            onUpdate={onUpdate}
-            onEdit={onEdit}
-            onDelete={onDelete}
-          />
+          <TodoItem key={todo.id} {...todo} />
         ))}
       </div>
     </div>
