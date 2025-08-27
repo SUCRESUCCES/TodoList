@@ -102,11 +102,4 @@ const TodoItem = ({
   );
 };
 
-export default memo(TodoItem, (prev: TodoItemProps, next: TodoItemProps) => {
-  if (prev.id !== next.id) return false;
-  if (prev.isDone !== next.isDone) return false;
-  if (prev.content !== next.content) return false;
-  if (prev.createdAt !== next.createdAt) return false;
-
-  return true;
-});
+export default memo(TodoItem);

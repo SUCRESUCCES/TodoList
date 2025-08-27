@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useReducer } from "react";
+import { useRef, useReducer, useCallback } from "react";
 import Header from "@/components/Header";
 import Editor from "@/components/Editor";
 import List from "@/components/List";
@@ -14,7 +14,7 @@ export default function Home() {
     Math.max(0, ...mockTodos.map((todo) => todo.id)) + 1
   );
 
-  const onCreate = (content: string) => {
+  const onCreate = useCallback((content: string) => {
     const newTodo: Todo = {
       id: idRef.current++,
       isDone: false,
@@ -22,19 +22,20 @@ export default function Home() {
       createdAt: new Date().getTime(),
     };
     dispatch({ type: "CREATE", data: newTodo });
-  };
+  }, []);
 
-  const onUpdate = (targetId: number) => {
+  const onUpdate = useCallback((targetId: number) => {
     dispatch({ type: "UPDATE", targetId });
-  };
+  }, []);
 
-  const onEdit = (targetId: number, newContent: string) => {
+  const onEdit = useCallback((targetId: number, newContent: string) => {
     dispatch({ type: "EDIT", targetId, newContent });
-  };
+  }, []);
 
-  const onDelete = (targetId: number) => {
+  const onDelete = useCallback((targetId: number) => {
     dispatch({ type: "DELETE", targetId });
-  };
+  }, []);
+
   return (
     <main className="animate-fade-in w-full max-w-lg mx-auto flex flex-col gap-4 p-4">
       <Header />
