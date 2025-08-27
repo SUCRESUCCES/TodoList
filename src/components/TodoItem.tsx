@@ -1,9 +1,9 @@
 import { Todo } from "@/types/todo";
 import { useState, useEffect, memo } from "react";
-import { useTodoContext } from "@/app/page";
+import { useTodoActions } from "@/app/page";
 
 const TodoItem = ({ id, content, isDone, createdAt }: Todo) => {
-  const { onUpdate, onEdit, onDelete } = useTodoContext();
+  const { onUpdate, onEdit, onDelete } = useTodoActions();
 
   const [isEditing, setIsEditing] = useState(false);
   const [editContent, setEditContent] = useState(content);

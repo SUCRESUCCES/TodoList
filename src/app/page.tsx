@@ -6,6 +6,7 @@ import {
   useCallback,
   createContext,
   useContext,
+  useMemo,
 } from "react";
 import Header from "@/components/Header";
 import Editor from "@/components/Editor";
@@ -13,19 +14,26 @@ import List from "@/components/List";
 import { mockTodos } from "@/data/mockData";
 import { Todo } from "@/types/todo";
 import { todoReducer } from "@/components/todoReducer";
+import { on } from "events";
 
-type TodoContextValue = {
-  todos: Todo[];
+type TodoActions = {
   onCreate: (content: string) => void;
   onUpdate: (id: number) => void;
   onEdit: (id: number, newContent: string) => void;
   onDelete: (id: number) => void;
 };
 
-export const TodoContext = createContext<TodoContextValue | null>(null);
+export const TodoStateContext = createContext<Todo[] | null>(null);
+export const TodoDistpatchContext = createContext<TodoActions | null>(null);
 
-export function useTodoContext() {
-  const ctx = useContext(TodoContext);
+export function useTodos() {
+  const ctx = useContext(TodoStateContext);
+  if (!ctx) throw new Error("TodoContext.Provider 안에서만 써야 함");
+  return ctx;
+}
+
+export function useTodoActions() {
+  const ctx = useContext(TodoDistpatchContext);
   if (!ctx) throw new Error("TodoContext.Provider 안에서만 써야 함");
   return ctx;
 }
@@ -58,21 +66,24 @@ export default function Home() {
     dispatch({ type: "DELETE", targetId });
   }, []);
 
+  const actions = useMemo<TodoActions>(
+    () => ({
+      onCreate,
+      onUpdate,
+      onEdit,
+      onDelete,
+    }),
+    [onCreate, onUpdate, onEdit, onDelete]
+  );
   return (
     <main className="animate-fade-in w-full max-w-lg mx-auto flex flex-col gap-4 p-4">
       <Header />
-      <TodoContext.Provider
-        value={{
-          todos,
-          onCreate,
-          onUpdate,
-          onEdit,
-          onDelete,
-        }}
-      >
-        <Editor />
-        <List />
-      </TodoContext.Provider>
+      <TodoStateContext.Provider value={todos}>
+        <TodoDistpatchContext.Provider value={actions}>
+          <Editor />
+          <List />
+        </TodoDistpatchContext.Provider>
+      </TodoStateContext.Provider>
     </main>
   );
 }

@@ -1,9 +1,9 @@
 import TodoItem from "./TodoItem";
 import { useState, useMemo } from "react";
-import { useTodoContext } from "@/app/page";
+import { useTodos } from "@/app/page";
 
 const List = () => {
-  const { todos } = useTodoContext();
+  const todos = useTodos();
   const [search, setSearch] = useState("");
 
   const onChangeSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
