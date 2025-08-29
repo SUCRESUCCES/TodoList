@@ -18,18 +18,14 @@ const Header = ({
   onToday,
   onSelectDate,
 }: HeaderProps) => {
-  const formattedDate = selectedDate.toLocaleDateString("ko-KR", {
-    weekday: "long",
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
-
   return (
     <div className="sticky top-0 z-50 p-4 sm:p-6 md:p-8 border-b bg-gray-50 flex flex-col items-center">
-      <h3 className="text-xs sm:text-sm font-semibold text-gray-500 tracking-widest">
+      <button
+        onClick={onToday}
+        className="text-xs sm:text-sm font-semibold text-gray-500 tracking-widest cursor-pointer hover:bg-gray-200 active:bg-gray-300 rounded-lg p-1 transition-color"
+      >
         오늘은
-      </h3>
+      </button>
       <div className="flex items-center justify-between mt-1 w-full">
         <button
           onClick={onPrevDay}
