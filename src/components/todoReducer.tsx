@@ -20,7 +20,7 @@ export function todoReducer(state: Todo[], action: Action) {
     case "EDIT":
       return state.map((todo) =>
         todo.id === action.targetId
-          ? { ...todo, content: action.newContent, createdAt: Date.now() }
+          ? { ...todo, content: action.newContent }
           : todo
       );
     case "DELETE":

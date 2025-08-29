@@ -32,12 +32,18 @@ export function useTodoManager() {
     localStorage.setItem(TODO_STORAGE_KEY, JSON.stringify(todos));
   }, [todos]);
 
-  const onCreate = useCallback((content: string) => {
+  const onCreate = useCallback((content: string, targetDate: Date) => {
+    const newTodoDate = new Date(targetDate);
+    const now = new Date();
+    newTodoDate.setHours(now.getHours());
+    newTodoDate.setMinutes(now.getMinutes());
+    newTodoDate.setSeconds(now.getSeconds());
+
     const newTodo: Todo = {
       id: idRef.current++,
       isDone: false,
       content: content,
-      createdAt: new Date().getTime(),
+      createdAt: newTodoDate.getTime(),
     };
     dispatch({ type: "CREATE", data: newTodo });
   }, []);

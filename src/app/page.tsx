@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useMemo } from "react";
 import Header from "@/components/Header";
 import Editor from "@/components/Editor";
 import List from "@/components/List";
@@ -29,6 +29,15 @@ export default function Home() {
 
   const { selectedDate, onPrevDay, onNextDay, onToday } = useDate();
 
+  const filterdTodos = useMemo(() => {
+    return todos.filter((todo) => {
+      const todoDate = new Date(todo.createdAt).toDateString();
+
+      const targetDate = selectedDate.toDateString();
+      return todoDate === targetDate;
+    });
+  }, [todos, selectedDate]);
+
   return (
     <main className="animate-fade-in w-full max-w-lg mx-auto flex flex-col gap-4 p-4">
       <Header
@@ -37,9 +46,9 @@ export default function Home() {
         onNextDay={onNextDay}
         onToday={onToday}
       />
-      <TodoStateContext.Provider value={todos}>
+      <TodoStateContext.Provider value={filterdTodos}>
         <TodoDistpatchContext.Provider value={actions}>
-          <Editor />
+          <Editor selectedDate={selectedDate} />
           <List />
         </TodoDistpatchContext.Provider>
       </TodoStateContext.Provider>

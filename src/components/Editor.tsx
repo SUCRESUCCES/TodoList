@@ -2,7 +2,11 @@ import { useState, useRef, useEffect } from "react";
 import React from "react";
 import { useTodoActions } from "@/app/page";
 
-const Editor = () => {
+interface EditorProps {
+  selectedDate: Date;
+}
+
+const Editor = ({ selectedDate }: EditorProps) => {
   const { onCreate } = useTodoActions();
 
   const [content, setContent] = useState<string>("");
@@ -11,7 +15,7 @@ const Editor = () => {
   // 첫 렌더링 시 자동 포커스
   useEffect(() => {
     contentRef.current?.focus();
-  });
+  }, []);
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setContent(e.target.value);
@@ -28,7 +32,7 @@ const Editor = () => {
       contentRef.current?.focus();
       return;
     }
-    onCreate(content.trim());
+    onCreate(content.trim(), selectedDate);
     setContent("");
     contentRef.current?.focus();
   };
