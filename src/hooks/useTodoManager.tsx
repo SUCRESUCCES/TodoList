@@ -9,7 +9,6 @@ export function useTodoManager() {
   const [todos, dispatch] = useReducer(todoReducer, []);
 
   const idRef = useRef<number>(0);
-  const isMounted = useRef<boolean>(false);
 
   // 데이터 로드
   useEffect(() => {
