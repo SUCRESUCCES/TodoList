@@ -9,6 +9,7 @@ export function useTodoManager() {
   const [todos, dispatch] = useReducer(todoReducer, []);
 
   const idRef = useRef<number>(0);
+  const isMounted = useRef<boolean>(false);
 
   // 데이터 로드
   useEffect(() => {
@@ -24,9 +25,11 @@ export function useTodoManager() {
 
   // 데이터 저장
   useEffect(() => {
-    if (todos.length > 0) {
-      localStorage.setItem(TODO_STORAGE_KEY, JSON.stringify(todos));
+    if (!isMounted.current) {
+      isMounted.current = true;
+      return;
     }
+    localStorage.setItem(TODO_STORAGE_KEY, JSON.stringify(todos));
   }, [todos]);
 
   const onCreate = useCallback((content: string) => {
