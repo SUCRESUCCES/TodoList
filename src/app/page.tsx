@@ -27,9 +27,10 @@ export function useTodoActions() {
 export default function Home() {
   const { todos, actions } = useTodoManager();
 
-  const { selectedDate, onPrevDay, onNextDay, onToday } = useDate();
+  const { selectedDate, onPrevDay, onNextDay, onToday, onSelectDate } =
+    useDate();
 
-  const filterdTodos = useMemo(() => {
+  const filteredTodos = useMemo(() => {
     return todos.filter((todo) => {
       const todoDate = new Date(todo.createdAt).toDateString();
 
@@ -45,8 +46,9 @@ export default function Home() {
         onPrevDay={onPrevDay}
         onNextDay={onNextDay}
         onToday={onToday}
+        onSelectDate={onSelectDate}
       />
-      <TodoStateContext.Provider value={filterdTodos}>
+      <TodoStateContext.Provider value={filteredTodos}>
         <TodoDistpatchContext.Provider value={actions}>
           <Editor selectedDate={selectedDate} />
           <List />

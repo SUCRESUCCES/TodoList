@@ -19,5 +19,10 @@ export function useDate() {
     setSelectedDate(new Date());
   }, []);
 
-  return { selectedDate, onPrevDay, onNextDay, onToday };
+  const onSelectDate = useCallback((date: Date | null) => {
+    if (date) {
+      setSelectedDate(date);
+    }
+  }, []);
+  return { selectedDate, onPrevDay, onNextDay, onToday, onSelectDate };
 }

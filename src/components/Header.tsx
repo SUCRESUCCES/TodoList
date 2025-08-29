@@ -1,11 +1,14 @@
 import React from "react";
 import { memo } from "react";
-
+import DatePicker from "react-datepicker";
+import { ko } from "date-fns/locale";
+import "react-datepicker/dist/react-datepicker.css";
 interface HeaderProps {
   selectedDate: Date;
   onPrevDay: () => void;
   onNextDay: () => void;
   onToday: () => void;
+  onSelectDate: (date: Date | null) => void;
 }
 
 const Header = ({
@@ -13,6 +16,7 @@ const Header = ({
   onPrevDay,
   onNextDay,
   onToday,
+  onSelectDate,
 }: HeaderProps) => {
   const formattedDate = selectedDate.toLocaleDateString("ko-KR", {
     weekday: "long",
@@ -33,11 +37,20 @@ const Header = ({
         >
           &lt;
         </button>
-        <button onClick={onToday} className="p-2 hover:bg-gray-200 rounded-lg">
-          <h1 className="text-xl sm:text-2xl font-bold text-blue-500 tracking-tight">
-            🌞 {formattedDate}
-          </h1>
-        </button>
+        <DatePicker
+          locale={ko}
+          selected={selectedDate}
+          onChange={onSelectDate}
+          dateFormat="yyyy년 MM월 dd일 (eee)"
+          className="text-xl sm:text-2xl font-bold text-blue-500 tracking-tight text-center bg-transparent hover:bg-gray-200 rounded-lg p-2 cursor-pointer w-72"
+          dayClassName={(date) =>
+            date.getDay() === 0
+              ? "text-red-500"
+              : date.getDay() === 6
+              ? "text-blue-500"
+              : ""
+          }
+        />
 
         <button
           onClick={onNextDay}
