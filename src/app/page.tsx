@@ -1,11 +1,12 @@
 "use client";
 
-import { createContext, useContext } from "react";
+import { createContext, useContext, useState } from "react";
 import Header from "@/components/Header";
 import Editor from "@/components/Editor";
 import List from "@/components/List";
 import { Todo } from "@/types/todo";
 import { useTodoManager } from "@/hooks/useTodoManager";
+import { useDate } from "@/hooks/useDate";
 import { TodoActions } from "@/types/actions";
 
 export const TodoStateContext = createContext<Todo[] | null>(null);
@@ -26,9 +27,16 @@ export function useTodoActions() {
 export default function Home() {
   const { todos, actions } = useTodoManager();
 
+  const { selectedDate, onPrevDay, onNextDay, onToday } = useDate();
+
   return (
     <main className="animate-fade-in w-full max-w-lg mx-auto flex flex-col gap-4 p-4">
-      <Header />
+      <Header
+        selectedDate={selectedDate}
+        onPrevDay={onPrevDay}
+        onNextDay={onNextDay}
+        onToday={onToday}
+      />
       <TodoStateContext.Provider value={todos}>
         <TodoDistpatchContext.Provider value={actions}>
           <Editor />
