@@ -1,6 +1,6 @@
 import TodoItem from "./TodoItem";
 import { useState, useMemo } from "react";
-import { useTodos } from "@/app/page";
+import { useTodos, useTodoActions } from "@/contexts/TodoContext";
 
 const List = () => {
   const todos = useTodos();

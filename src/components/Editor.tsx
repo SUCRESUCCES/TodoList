@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import React from "react";
-import { useTodoActions } from "@/app/page";
+import { useTodoActions } from "@/contexts/TodoContext";
 
 interface EditorProps {
   selectedDate: Date;
