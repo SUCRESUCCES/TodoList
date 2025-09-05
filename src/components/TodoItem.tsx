@@ -1,6 +1,6 @@
 import { Todo } from "@/types/todo";
 import { useState, useEffect, memo } from "react";
-import { useTodoActions } from "@/app/page";
+import { useTodoActions } from "@/contexts/TodoContext";
 
 const TodoItem = ({ id, content, isDone, createdAt }: Todo) => {
   const { onUpdate, onEdit, onDelete } = useTodoActions();
