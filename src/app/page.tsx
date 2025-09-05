@@ -4,7 +4,6 @@ import { useMemo } from "react";
 import Header from "@/components/Header";
 import Editor from "@/components/Editor";
 import List from "@/components/List";
-import { Todo } from "@/types/todo";
 import { useTodoManager } from "@/hooks/useTodoManager";
 import { useDate } from "@/hooks/useDate";
 import { TodoStateContext, TodoDistpatchContext } from "@/contexts/TodoContext";
