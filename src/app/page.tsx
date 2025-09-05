@@ -9,6 +9,7 @@ import { useDate } from "@/hooks/useDate";
 import { TodoStateContext, TodoDistpatchContext } from "@/contexts/TodoContext";
 
 export default function Home() {
+  // Vercel 연동 테스트
   const { todos, actions } = useTodoManager();
 
   const { selectedDate, onPrevDay, onNextDay, onToday, onSelectDate } =
