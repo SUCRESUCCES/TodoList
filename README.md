@@ -4,7 +4,7 @@
 이 프로젝트는 **할 일 관리 애플리케이션**으로, 일정을 기록하고 정리할 수 있는 간단하면서 직관적인 **Todo App**입니다.  
 작은 습관부터 중요한 계획까지, 효율적으로 관리해보세요!  
 
-👉 배포 주소: [ttodutodo.vercel.app](https://ttodutodo.vercel.app/)  
+## 배포 주소
 <br/>
 <a href="https://ttodutodo.vercel.app/">
   <img src="https://todo-app-rose-tau.vercel.app/openGraph.png" alt="ttodutodo 썸네일" width="400px" />
